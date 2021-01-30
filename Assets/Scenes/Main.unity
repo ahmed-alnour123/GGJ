@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: {fileID: 3662495757547493537, guid: 1a7d8ac3bf00acf44a89fefb9944c609, type: 3}
-  maxSeeds: 0
+  maxSeeds: 10
   time: 2
 --- !u!4 &1895945211
 Transform:
