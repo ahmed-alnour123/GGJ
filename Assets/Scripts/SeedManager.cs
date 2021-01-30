@@ -6,6 +6,7 @@ public class SeedManager : MonoBehaviour {
 
     public GameObject seed;
     public int maxSeeds;
+    private int numberOfSeeds;
     // public int seedsAtTime; to make more than 1 seed at same time
     Seed currentSeed;
     public float time;
@@ -17,10 +18,11 @@ public class SeedManager : MonoBehaviour {
         initPos = seed.transform.position;
         initRot = seed.transform.rotation;
         currentSeed = Instantiate(seed, initPos, initRot).GetComponent<Seed>();
+        numberOfSeeds = 1;
     }
 
     void Update() {
-        if (currentSeed.isAwake) {
+        if (currentSeed != null && currentSeed.isAwake) {
             Countdown();
         }
     }
@@ -30,8 +32,11 @@ public class SeedManager : MonoBehaviour {
             currentTime += Time.deltaTime;
         } else {
             Destroy(currentSeed.gameObject);
-            currentSeed = Instantiate(seed, initPos, initRot).GetComponent<Seed>();
-            currentTime = 0;
+            if (numberOfSeeds < maxSeeds) {
+                currentSeed = Instantiate(seed, initPos, initRot * Random.rotation).GetComponent<Seed>();
+                currentTime = 0;
+                numberOfSeeds++;
+            }
         }
     }
 }

@@ -7,25 +7,22 @@ public class Seed : MonoBehaviour {
     public float speed;
     public float distance;
     public float awakeRadius;
-    private Transform player;
     public bool isAwake = false;
+    private Transform playerBody;
+    private Transform body;
     private Quaternion targetRot;
     private Quaternion newRot;
-    private Transform clone;
-    private Vector3 initPos;
-    private Quaternion initRot;
 
     private void Start() {
         targetRot = transform.rotation * Random.rotation;
-        player = GameObject.FindObjectOfType<Player>().transform;
-        clone = transform;
-        initPos = transform.position;
-        initRot = transform.rotation;
+        playerBody = GameObject.FindObjectOfType<Player>().transform.GetChild(0);
+        body = transform.GetChild(0);
         isAwake = false;
+        print("hi");
     }
 
     void Update() {
-        if (Quaternion.Angle(transform.rotation, player.rotation) < awakeRadius) {
+        if (Mathf.Abs((body.position - playerBody.position).magnitude) < awakeRadius) {
             isAwake = true;
         }
 

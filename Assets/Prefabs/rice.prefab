@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   distance: 10
-  awakeRadius: 15
+  awakeRadius: 8
   isAwake: 0
 --- !u!1 &3662495758921496117
 GameObject:
