@@ -17,7 +17,6 @@ public class Player : MonoBehaviour {
         // the we use x-axis to go forward and backward, and y-axis to rotate, we don't need z-axis
         transform.Rotate(0, h * horizontalSpeed * Time.deltaTime, 0);
         barbarian.Rotate(0, h * horizontalSpeed * Time.deltaTime, 0);
-        transform.Rotate(v * verticalSpeed * Time.deltaTime,0, 0);
+        transform.Rotate((v > 0 ? v : 0) * verticalSpeed * Time.deltaTime, 0, 0);
     }
 }
-    

@@ -18,7 +18,6 @@ public class Seed : MonoBehaviour {
         playerBody = GameObject.FindObjectOfType<Player>().transform.GetChild(0);
         body = transform.GetChild(0);
         isAwake = false;
-        print("hi");
     }
 
     void Update() {
