@@ -5,7 +5,7 @@ using UnityEngine;
 public class Barbarian : MonoBehaviour {
 
     private Transform player;
-    public Transform body;
+    private Transform body;
     private Transform playerbody;
 
     private float speed;

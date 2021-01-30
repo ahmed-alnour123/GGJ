@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Seed : MonoBehaviour {
 
+    // TODO: start paricle system only when waking up
     private float speed, distance, awakeRadius;
     [HideInInspector]
     public bool isAwake = false, isDisappeard = false;

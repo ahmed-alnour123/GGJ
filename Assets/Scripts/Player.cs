@@ -22,7 +22,7 @@ public class Player : MonoBehaviour {
             barbarian.Rotate(0, h * horizontalSpeed * Time.deltaTime, 0);
         }
 
-        transform.Rotate((v > 0 ? v : 0) * verticalSpeed * Time.deltaTime, 0, 0);
+        transform.Rotate(v * verticalSpeed * Time.deltaTime, 0, 0);
         if (health == 1) {
             GetComponentInChildren<MeshRenderer>().material.color = Color.red;
         } else if (health == 0) {
