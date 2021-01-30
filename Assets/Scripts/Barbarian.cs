@@ -2,29 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Follow : MonoBehaviour {
-    public Transform player;
+public class Barbarian : MonoBehaviour {
 
-    public Transform barbody;
-    public Transform playerbody;
-    [Range(1, 50)]
-    public float speed;
-    public float jump_power, jump_distance, jump_counter, jump_cooldown;
-    public float searchRadius;
+    private Transform player;
+    public Transform body;
+    private Transform playerbody;
+
+    private float speed;
+    private float jump_power, jump_distance, jump_counter, jump_cooldown;
+    private float searchRadius;
     public bool jumping;
     public bool cooldown;
+
     private float jump_start;
     private bool foundPlayer = false;
     private Quaternion direction;
 
+    void Init() {
+        var parent = FindObjectOfType<BarbarianManager>();
+        speed = parent.speed;
+        jump_power = parent.jump_power;
+        jump_distance = parent.jump_distance;
+        jump_counter = parent.jump_counter;
+        jump_cooldown = parent.jump_cooldown;
+        searchRadius = parent.searchRadius;
+    }
     void Start() {
-
+        Init();
+        body = transform.GetChild(0);
+        player = GameObject.FindObjectOfType<Player>().transform;
+        playerbody = player.GetChild(0);
     }
 
-    // Update is called once per frame
     void Update() {
-        if (Vector3.Distance(barbody.position, playerbody.position) < searchRadius) {
+        if (!foundPlayer && Vector3.Distance(body.position, playerbody.position) < searchRadius) { // we need to check for this only once for performance
             foundPlayer = true;
+            body.GetComponent<MeshRenderer>().material.color = Color.green;
         }
 
         if (foundPlayer) {
@@ -38,7 +51,7 @@ public class Follow : MonoBehaviour {
             cooldown = false;
         }
 
-        if (Vector3.Distance(barbody.position, playerbody.position) > jump_distance && !cooldown) {
+        if (Vector3.Distance(body.position, playerbody.position) > jump_distance && !cooldown) {
             if (!jumping) {
                 jump_start = Time.time;
             }
@@ -63,8 +76,15 @@ public class Follow : MonoBehaviour {
     }
 
     private void FollowPlayer(float speed) {
-        if (!cooldown)
+        if (!cooldown) {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, player.rotation, Time.deltaTime * speed);
+        }
+    }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Player")) {
+            other.GetComponentInParent<Player>().health--;
+            // TODO: stop enemy and move player away
+        }
     }
 }

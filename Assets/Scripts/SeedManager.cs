@@ -6,37 +6,46 @@ public class SeedManager : MonoBehaviour {
 
     public GameObject seed;
     public int maxSeeds;
-    private int numberOfSeeds;
-    // public int seedsAtTime; to make more than 1 seed at same time
-    Seed currentSeed;
-    public float time;
+    private int createdSeeds;
+    public int seedsAtTime = 1;
+    Seed[] currentSeeds;
+    public float lifeTime;
+    public bool outOfSeeds = false; // for GameManager;
     private float currentTime;
-    Vector3 initPos;
-    Quaternion initRot;
 
-    private void Start() {
-        initPos = seed.transform.position;
-        initRot = seed.transform.rotation;
-        currentSeed = Instantiate(seed, initPos, initRot).GetComponent<Seed>();
-        numberOfSeeds = 1;
-    }
+    public float speed;
+    public float distance;
+    public float awakeRadius;
 
-    void Update() {
-        if (currentSeed != null && currentSeed.isAwake) {
-            Countdown();
+    public void Start() {
+        currentSeeds = new Seed[seedsAtTime];
+        for (int i = 0; i < currentSeeds.Length; i++) {
+            currentSeeds[i] = CreateNew();
         }
     }
 
-    private void Countdown() {
-        if (currentTime < time) {
-            currentTime += Time.deltaTime;
-        } else {
-            Destroy(currentSeed.gameObject);
-            if (numberOfSeeds < maxSeeds) {
-                currentSeed = Instantiate(seed, initPos, initRot * Random.rotation).GetComponent<Seed>();
-                currentTime = 0;
-                numberOfSeeds++;
+    public void Update() {
+        for (int i = 0; i < currentSeeds.Length; i++) {
+            if (currentSeeds[i] != null) {
+                if (currentSeeds[i].isAwake) {
+                    currentSeeds[i].Countdown(lifeTime);
+                }
+                if (currentSeeds[i].isDisappeard) {
+                    Destroy(currentSeeds[i].gameObject);
+                    if (createdSeeds < maxSeeds) {
+                        currentSeeds[i] = CreateNew();
+                    }
+                }
             }
         }
+
+        if (createdSeeds == maxSeeds) {
+            outOfSeeds = true;
+        }
+    }
+
+    private Seed CreateNew() {
+        createdSeeds++;
+        return Instantiate(seed, Vector3.zero, Random.rotation, transform).GetComponent<Seed>();
     }
 }

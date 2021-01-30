@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3662495757547493543}
   - component: {fileID: 3662495757547493542}
   m_Layer: 0
-  m_Name: rice
+  m_Name: seed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962f231e4469977418e528a1486c2e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  distance: 10
-  awakeRadius: 8
   isAwake: 0
+  isDisappeard: 0
 --- !u!1 &3662495758921496117
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,7 +59,7 @@ GameObject:
   - component: {fileID: 3662495758921496120}
   - component: {fileID: 3662495758921496123}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: seed body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

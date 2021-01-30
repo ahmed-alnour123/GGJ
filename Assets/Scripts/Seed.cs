@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Seed : MonoBehaviour {
 
-    public float speed;
-    public float distance;
-    public float awakeRadius;
-    public bool isAwake = false;
+    private float speed, distance, awakeRadius;
+    [HideInInspector]
+    public bool isAwake = false, isDisappeard = false;
     private Transform playerBody;
     private Transform body;
     private Quaternion targetRot;
     private Quaternion newRot;
 
+    public void Init() {
+        SeedManager parent = GetComponentInParent<SeedManager>();
+        speed = parent.speed;
+        distance = parent.distance;
+        awakeRadius = parent.awakeRadius;
+    }
+
     private void Start() {
+        Init();
         targetRot = transform.rotation * Random.rotation;
         playerBody = GameObject.FindObjectOfType<Player>().transform.GetChild(0);
         body = transform.GetChild(0);
@@ -21,8 +28,9 @@ public class Seed : MonoBehaviour {
     }
 
     void Update() {
-        if (Mathf.Abs((body.position - playerBody.position).magnitude) < awakeRadius) {
+        if (!isAwake && Mathf.Abs((body.position - playerBody.position).magnitude) < awakeRadius) {
             isAwake = true;
+            body.GetComponent<MeshRenderer>().material.color = Color.magenta;
         }
 
         if (isAwake) {
@@ -36,6 +44,15 @@ public class Seed : MonoBehaviour {
             transform.rotation = newRot;
         } else {
             targetRot = transform.rotation * Random.rotation;
+        }
+    }
+
+    float currentTime = 0;
+    public void Countdown(float time) {
+        if (currentTime < time) {
+            currentTime += Time.deltaTime;
+        } else {
+            isDisappeard = true;
         }
     }
 }
