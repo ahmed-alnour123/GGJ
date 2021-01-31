@@ -31,7 +31,6 @@ public class Seed : MonoBehaviour {
     void Update() {
         if (!isAwake && Mathf.Abs((body.position - playerBody.position).magnitude) < awakeRadius) {
             isAwake = true;
-            body.GetComponent<MeshRenderer>().material.color = Color.magenta;
         }
 
         if (isAwake) {

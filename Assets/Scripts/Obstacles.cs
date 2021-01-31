@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour {
 
-    public GameObject obstacle;
-    public int n;
+    public int numberOfRocks, numberOfBranches;
+    public Transform rocks;
+    public GameObject branch;
 
     void Start() {
-        for (int i = 0; i < n; i++) {
-            transform.Rotate(Random.insideUnitSphere * 360); // randomly rotate the parent before instantiating
-            var m = Instantiate(obstacle, Vector3.up * 50.5f, Quaternion.identity, transform).GetComponent<MeshRenderer>().material; // Intantiate a new object and get it't material
-            m.color = Random.ColorHSV(0, 1, 0, 1, 1, 1); // change it to random color that has value of 1
+        for (int i = 0; i < numberOfBranches; i++) {
+            transform.Rotate(Random.rotation.eulerAngles); // randomly rotate the parent before instantiating
+            Instantiate(branch, Vector3.zero, Quaternion.identity, transform); // Intantiate a new object and get it't material
+        }
+
+        for (int i = 0; i < numberOfRocks; i++) {
+            int r = Random.Range(0, rocks.childCount - 1);
+            print(rocks.childCount);
+            transform.Rotate(Random.rotation.eulerAngles); // randomly rotate the parent before instantiating
+            Instantiate(rocks.GetChild(r).gameObject, Vector3.zero, Quaternion.identity, transform); // Intantiate a new object and get it't material
         }
     }
 }

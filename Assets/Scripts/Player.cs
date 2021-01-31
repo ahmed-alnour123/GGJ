@@ -26,9 +26,7 @@ public class Player : MonoBehaviour {
 
         transform.Rotate(v * verticalSpeed * Time.deltaTime, 0, 0);
 
-        if (health == 1) {
-            GetComponentInChildren<MeshRenderer>().material.color = Color.red;
-        } else if (health == 0) {
+        if (health == 1) { } else if (health == 0) {
             isDead = true;
         }
     }
