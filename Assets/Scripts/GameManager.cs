@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public float levelTime;
@@ -13,6 +14,13 @@ public class GameManager : MonoBehaviour {
 
     public GameObject vehicle;
     private bool canRide = false;
+    public GameObject loseMenu;
+    public GameObject winMenu;
+    public Text timer;
+    public bool justLost = false;
+    private bool justWon = false;
+    private float counter;
+    
 
     void Start() {
         player = GameObject.FindObjectOfType<Player>();
@@ -22,8 +30,11 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         // level timer
+
         if (currentTime > 0) {
             currentTime -= Time.deltaTime;
+            timer.text = ((int)currentTime/60).ToString() + ":" + ((int)currentTime%60).ToString();
+
         } else {
             LoseLevel();
         }
@@ -49,13 +60,36 @@ public class GameManager : MonoBehaviour {
     }
 
     void LoseLevel() {
-        Time.timeScale = 0; // TODO: remove
-        print("Lost");
+        if(!justLost)
+        {
+        counter = Time.time + 3f;
         player.GetComponentInChildren<Renderer>().material.color = Color.blue;
+        justLost = true;
+        } else if(Time.time >= counter)
+        {
+            Time.timeScale = 0f;
+            loseMenu.SetActive(true);
+            justLost = false;
+
+        }
+
+       
+
     }
 
     void WinLevel() {
-        Time.timeScale = 0; // TODO: remove
-        print("Won");
+       
+       if(!justWon)
+        {
+        counter = Time.time + 3f;
+        justWon = true;
+        } else if(Time.time >= counter)
+        {
+            winMenu.SetActive(true);
+            Time.timeScale = 0f;
+
+            justWon = false;
+        }
+
     }
 }
