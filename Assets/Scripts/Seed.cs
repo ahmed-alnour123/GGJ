@@ -12,6 +12,7 @@ public class Seed : MonoBehaviour {
     private Transform body;
     private Quaternion targetRot;
     private Quaternion newRot;
+    AudioSource source;
 
     public void Init() {
         SeedManager parent = GetComponentInParent<SeedManager>();
@@ -21,6 +22,7 @@ public class Seed : MonoBehaviour {
     }
 
     private void Start() {
+        source = GetComponent<AudioSource>();
         Init();
         targetRot = transform.rotation * Random.rotation;
         playerBody = GameObject.FindObjectOfType<Player>().transform.GetChild(0);
@@ -31,6 +33,8 @@ public class Seed : MonoBehaviour {
     void Update() {
         if (!isAwake && Mathf.Abs((body.position - playerBody.position).magnitude) < awakeRadius) {
             isAwake = true;
+            source.Play();
+
         }
 
         if (isAwake) {

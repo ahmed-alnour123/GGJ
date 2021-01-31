@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenu;
     void Start()
     {
+        
     }
 
     // Update is called once per frame

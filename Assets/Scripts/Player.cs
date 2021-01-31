@@ -13,7 +13,11 @@ public class Player : MonoBehaviour {
     public bool onVehicle = false;
     public List<Transform> barbarians = new List<Transform>();
     [HideInInspector] public int gotSacks = 0;
+    AudioSource source;
 
+    private void Start() {
+        source = GetComponent<AudioSource>();
+    }
     void Update() {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -39,6 +43,7 @@ public class Player : MonoBehaviour {
             case "Sack":
                 Destroy(other.gameObject);
                 gotSacks++;
+                source.Play();
                 break;
             case "Barbarian":
                 health--;
