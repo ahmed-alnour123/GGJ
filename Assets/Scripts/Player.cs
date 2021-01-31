@@ -10,7 +10,9 @@ public class Player : MonoBehaviour {
     public float horizontalSpeed;
     public int health = 2;
     public bool isDead;
+    public bool onVehicle = false;
     public List<Transform> barbarians = new List<Transform>();
+    [HideInInspector] public int gotSacks = 0;
 
     void Update() {
         float h = Input.GetAxisRaw("Horizontal");
@@ -23,10 +25,30 @@ public class Player : MonoBehaviour {
         }
 
         transform.Rotate(v * verticalSpeed * Time.deltaTime, 0, 0);
+
         if (health == 1) {
             GetComponentInChildren<MeshRenderer>().material.color = Color.red;
         } else if (health == 0) {
             isDead = true;
         }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        switch (other.tag) {
+            case "Vehicle":
+                onVehicle = true;
+                break;
+            case "Sack":
+                Destroy(other.gameObject);
+                gotSacks++;
+                break;
+            case "Barbarian":
+                health--;
+                break;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        onVehicle = false;
     }
 }

@@ -80,11 +80,4 @@ public class Barbarian : MonoBehaviour {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, player.rotation, Time.deltaTime * speed);
         }
     }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) {
-            other.GetComponentInParent<Player>().health--;
-            // TODO: stop enemy and move player away
-        }
-    }
 }

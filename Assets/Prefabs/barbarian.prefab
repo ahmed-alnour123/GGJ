@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8361200574220471579}
   m_Layer: 0
   m_Name: barbarian body
-  m_TagString: Untagged
+  m_TagString: Barbarian
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 8361200574319467177}
   m_Layer: 0
   m_Name: barbarian
-  m_TagString: Untagged
+  m_TagString: Barbarian
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,15 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba5ed45534ad2055a191a7f52b69dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  barbody: {fileID: 8361200574220471576}
-  playerbody: {fileID: 0}
-  speed: 8
-  jump_power: 30
-  jump_distance: 20
-  jump_counter: 2
-  jump_cooldown: 3
-  searchRadius: 10
   jumping: 0
   cooldown: 0
 --- !u!54 &8361200574319467177

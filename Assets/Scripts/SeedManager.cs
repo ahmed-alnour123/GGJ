@@ -8,9 +8,10 @@ public class SeedManager : MonoBehaviour {
     public int maxSeeds;
     private int createdSeeds;
     public int seedsAtTime = 1;
+    [HideInInspector] public int sacksNow = 0;
     Seed[] currentSeeds;
     public float lifeTime;
-    public bool outOfSeeds = false; // for GameManager;
+    public bool outOfSacks = false; // for GameManager;
     private float currentTime;
 
     public float speed;
@@ -32,6 +33,7 @@ public class SeedManager : MonoBehaviour {
                 }
                 if (currentSeeds[i].isDisappeard) {
                     Destroy(currentSeeds[i].gameObject);
+                    sacksNow--;
                     if (createdSeeds < maxSeeds) {
                         currentSeeds[i] = CreateNew();
                     }
@@ -40,12 +42,13 @@ public class SeedManager : MonoBehaviour {
         }
 
         if (createdSeeds == maxSeeds) {
-            outOfSeeds = true;
+            outOfSacks = true;
         }
     }
 
     private Seed CreateNew() {
         createdSeeds++;
+        sacksNow++;
         return Instantiate(seed, Vector3.zero, Random.rotation, transform).GetComponent<Seed>();
     }
 }
