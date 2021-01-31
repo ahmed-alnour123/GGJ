@@ -950,8 +950,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409377393}
-  m_LocalRotation: {x: -0.4197766, y: 0.0003185449, z: -0.00068875856, w: -0.90762717}
-  m_LocalPosition: {x: -0.016357822, y: 70.078156, z: -16.04}
+  m_LocalRotation: {x: -0.39086953, y: 0.00027659695, z: -0.0006513489, w: -0.92044586}
+  m_LocalPosition: {x: -0.01635759, y: 65.59999, z: -13.900001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1210375386}
@@ -1165,7 +1165,7 @@ Transform:
   m_Children:
   - {fileID: 2488036777387058853}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &610240380
 GameObject:
@@ -2322,8 +2322,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889834601}
-  m_LocalRotation: {x: -0.4197766, y: 0.0003185449, z: -0.00068875856, w: -0.90762717}
-  m_LocalPosition: {x: -0.016357822, y: 70.078156, z: -16.04}
+  m_LocalRotation: {x: -0.39086953, y: 0.00027659695, z: -0.0006513489, w: -0.92044586}
+  m_LocalPosition: {x: -0.01635759, y: 65.59999, z: -13.900001}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2346,7 +2346,6 @@ MonoBehaviour:
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
   m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -2715,7 +2714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 3
-  m_FollowOffset: {x: 0, y: 18.92815, z: -16.08579}
+  m_FollowOffset: {x: 0, y: 14.449993, z: -13.94579}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2735,8 +2734,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 0.0000008283451
-    m_SpeedMode: 0
+    Value: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
     m_DecelTime: 0.1
@@ -2770,7 +2768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
   m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
+  m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0.1
   m_VerticalDamping: 0.5
