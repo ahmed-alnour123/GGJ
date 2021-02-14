@@ -15,7 +15,8 @@ public class BarbarianManager : MonoBehaviour {
     void Start() {
         var player = GameObject.FindObjectOfType<Player>();
         for (int i = 0; i < numberOfBarbarians; i++) {
-            player.barbarians.Add(Instantiate(barbarian, Vector3.zero, Random.rotation, transform).transform);
+            // player.barbarians.Add(Instantiate(barbarian, Vector3.zero, Random.rotation, transform).transform);
+            Instantiate(barbarian, Vector3.zero, Random.rotation, transform);
         }
     }
 }
