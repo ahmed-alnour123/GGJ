@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     public int neededSacks;
 
     private Player player;
-    private SeedManager seedManager;
+    private SackManager sackManager;
 
     public GameObject vehicle;
     private bool canRide = false;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         player = GameObject.FindObjectOfType<Player>();
-        seedManager = GameObject.FindObjectOfType<SeedManager>();
+        sackManager = GameObject.FindObjectOfType<SackManager>();
         currentTime = levelTime;
     }
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
         // you dead or you there are no more sacks
         if (player.isDead ||
-            (seedManager.outOfSacks && seedManager.sacksNow + player.gotSacks < neededSacks)) {
+            (sackManager.outOfSacks && sackManager.sacksNow + player.gotSacks < neededSacks)) {
             LoseLevel();
         }
     }

@@ -16,7 +16,6 @@ public class Obstacles : MonoBehaviour {
 
         for (int i = 0; i < numberOfRocks; i++) {
             int r = Random.Range(0, rocks.childCount - 1);
-            print(rocks.childCount);
             transform.Rotate(Random.rotation.eulerAngles); // randomly rotate the parent before instantiating
             Instantiate(rocks.GetChild(r).gameObject, Vector3.zero, Quaternion.identity, transform); // Intantiate a new object and get it't material
         }

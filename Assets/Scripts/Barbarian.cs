@@ -4,80 +4,45 @@ using UnityEngine;
 
 public class Barbarian : MonoBehaviour {
 
+    private float speed, searchRadius, height; // we will get it from parent
     private Transform player;
-    private Transform body;
-    private Transform playerbody;
-
-    private float speed;
-    private float jump_power, jump_distance, jump_counter, jump_cooldown;
-    private float searchRadius;
-    public bool jumping;
-    public bool cooldown;
-
-    private float jump_start;
-    private bool foundPlayer = false;
-    private Quaternion direction;
+    private Rigidbody rb;
+    private bool isAwake;
 
     void Init() {
         var parent = FindObjectOfType<BarbarianManager>();
         speed = parent.speed;
-        jump_power = parent.jump_power;
-        jump_distance = parent.jump_distance;
-        jump_counter = parent.jump_counter;
-        jump_cooldown = parent.jump_cooldown;
         searchRadius = parent.searchRadius;
+        height = parent.height;
     }
+
     void Start() {
         Init();
-        body = transform.GetChild(0);
-        player = GameObject.FindObjectOfType<Player>().transform;
-        playerbody = player.GetChild(0);
+        player = FindObjectOfType<Player>().transform;
+        rb = GetComponent<Rigidbody>();
+        isAwake = false;
     }
 
     void Update() {
-        if (!foundPlayer && Vector3.Distance(body.position, playerbody.position) < searchRadius) { // we need to check for this only once for performance
-            foundPlayer = true;
-            body.GetComponent<MeshRenderer>().material.color = Color.green;
+        if (!isAwake && Vector3.Distance(rb.position, player.position) < searchRadius) {
+            isAwake = true;
         }
-
-        if (foundPlayer) {
-            FollowPlayer(speed);
-            Jump(jump_power, jump_distance, jump_counter, jump_cooldown);
+    }
+    void FixedUpdate() {
+        if (isAwake) {
+            Move();
         }
     }
 
-    private void Jump(float jump_power, float jump_distance, float jump_counter, float jump_cooldown) {
-        if (Time.time >= jump_start + jump_counter + jump_cooldown) {
-            cooldown = false;
-        }
+    void Move() {
+        Vector3 newPos = Vector3.MoveTowards(rb.position, player.position, speed * Time.deltaTime);
+        Vector3 originalVel = rb.velocity;
 
-        if (Vector3.Distance(body.position, playerbody.position) > jump_distance && !cooldown) {
-            if (!jumping) {
-                jump_start = Time.time;
-            }
+        // fix position
+        Vector3 constrained = newPos.normalized * (ValuesManager.radius + 0.5f); // TODO: put it in variable
+        rb.position = constrained;
 
-            jumping = true;
-            if (Time.time <= jump_start + jump_counter - 0.5f) {
-                direction = player.rotation;
-            } else if (Time.time >= jump_start + jump_counter) {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, direction, Time.deltaTime * jump_power);
-
-                if (Time.time >= jump_start + jump_counter + 0.3f) {
-                    cooldown = true;
-                    if (Time.time >= jump_start + jump_counter + jump_cooldown) {
-                        cooldown = false;
-                    }
-                }
-            }
-
-        } else {
-            jumping = false;
-        }
-    }
-
-    private void FollowPlayer(float speed) {
-        if (!cooldown) {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, player.rotation, Time.deltaTime * speed);
-        }
+        // fix rotation
+        rb.rotation = Quaternion.FromToRotation(transform.up, rb.position.normalized) * rb.rotation;
     }
 }

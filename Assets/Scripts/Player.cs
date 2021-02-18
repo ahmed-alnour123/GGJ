@@ -4,35 +4,49 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    [Range(1, 100)]
-    public float verticalSpeed;
-    [Range(1, 100)]
-    public float horizontalSpeed;
+    public float speed;
+    public float rotSpeed;
+    public float height;
     public int health = 2;
+
+    [HideInInspector]
     public bool isDead;
+    [HideInInspector]
     public bool onVehicle = false;
-    public List<Transform> barbarians = new List<Transform>();
-    [HideInInspector] public int gotSacks = 0;
-    AudioSource source;
+    [HideInInspector]
+    public int gotSacks = 0;
+
+    private AudioSource source;
+    private Rigidbody rb;
+    private float h, v;
 
     private void Start() {
         source = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
     }
     void Update() {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
 
-        // the we use x-axis to go forward and backward, and y-axis to rotate, we don't need z-axis
-        transform.Rotate(0, h * horizontalSpeed * Time.deltaTime, 0);
-        foreach (var barbarian in barbarians) {
-            barbarian.Rotate(0, h * horizontalSpeed * Time.deltaTime, 0);
-        }
-
-        transform.Rotate(v * verticalSpeed * Time.deltaTime, 0, 0);
-
-        if (health == 1) { } else if (health == 0) {
+        if (health == 0) {
             isDead = true;
         }
+    }
+
+    void FixedUpdate() => Move();
+
+    void Move() {
+        Vector3 originalVel = rb.velocity;
+
+        Vector3 newPos = rb.position + (transform.forward * v * speed * Time.deltaTime);
+        Quaternion newRot = rb.rotation * Quaternion.Euler(0, h * rotSpeed * Time.deltaTime, 0);
+
+        // fix position
+        Vector3 constrained = newPos.normalized * (ValuesManager.radius + height);
+        rb.position = constrained;
+
+        // fix rotation
+        rb.rotation = Quaternion.FromToRotation(transform.up, rb.position.normalized) * newRot;
     }
 
     private void OnTriggerEnter(Collider other) {

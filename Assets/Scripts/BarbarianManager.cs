@@ -7,16 +7,19 @@ public class BarbarianManager : MonoBehaviour {
     public GameObject barbarian;
     public int numberOfBarbarians;
 
-    [Range(1, 50)]
+    [Header("For Children")]
     public float speed;
-    public float jump_power, jump_distance, jump_counter, jump_cooldown;
     public float searchRadius;
+    public float height;
 
     void Start() {
         var player = GameObject.FindObjectOfType<Player>();
         for (int i = 0; i < numberOfBarbarians; i++) {
-            // player.barbarians.Add(Instantiate(barbarian, Vector3.zero, Random.rotation, transform).transform);
-            Instantiate(barbarian, Vector3.zero, Random.rotation, transform);
+            var rb = Instantiate(barbarian,
+                Random.onUnitSphere * (ValuesManager.radius + height),
+                Quaternion.identity,
+                transform).GetComponent<Rigidbody>();
+            rb.rotation = Quaternion.FromToRotation(rb.transform.up, rb.position.normalized);
         }
     }
 }
