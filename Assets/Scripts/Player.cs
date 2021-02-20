@@ -5,8 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public float speed;
+    [Range(0, 1)]
+    public float slowDownFactor;
     public float rotSpeed;
     public float height;
+    public float ghostTime;
     public int health = 2;
 
     [HideInInspector]
@@ -19,26 +22,39 @@ public class Player : MonoBehaviour {
     private AudioSource source;
     private Rigidbody rb;
     private float h, v;
+    private float newSpeed;
+    private bool isGhost = false;
+    private Collider playerCollider;
 
     private void Start() {
         source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        playerCollider = GetComponent<Collider>();
     }
     void Update() {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
+        newSpeed = (h == 0) ? speed : speed * slowDownFactor;
 
         if (health == 0) {
             isDead = true;
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 
-    void FixedUpdate() => Move();
+    void FixedUpdate() {
+        if (!isDead) {
+            Move();
+
+            if (isGhost) {
+                StartCoroutine(BecomeGhost(ghostTime)); // this is not working perfectly
+            }
+        }
+    }
 
     void Move() {
-        Vector3 originalVel = rb.velocity;
-
-        Vector3 newPos = rb.position + (transform.forward * v * speed * Time.deltaTime);
+        Vector3 newPos = rb.position + (transform.forward * v * newSpeed * Time.deltaTime);
         Quaternion newRot = rb.rotation * Quaternion.Euler(0, h * rotSpeed * Time.deltaTime, 0);
 
         // fix position
@@ -59,13 +75,30 @@ public class Player : MonoBehaviour {
                 gotSacks++;
                 source.Play();
                 break;
-            case "Barbarian":
-                health--;
-                break;
         }
     }
 
     private void OnTriggerExit(Collider other) {
         onVehicle = false;
     }
+
+    private void OnCollisionEnter(Collision other) {
+
+        switch (other.gameObject.tag) {
+            case "Barbarian":
+                health--;
+                isGhost = true;
+                break;
+        }
+    }
+
+    IEnumerator BecomeGhost(float time) {
+        playerCollider.isTrigger = true;
+        GetComponentInChildren<Renderer>().enabled = !GetComponentInChildren<Renderer>().enabled; // TODO: optimize this
+        yield return new WaitForSeconds(time);
+        isGhost = false;
+        playerCollider.isTrigger = false;
+        GetComponentInChildren<Renderer>().enabled = true;
+    }
+
 }

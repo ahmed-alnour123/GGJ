@@ -29,11 +29,9 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         // level timer
-
         if (currentTime > 0) {
-            currentTime -= Time.deltaTime;
+            currentTime -= Time.unscaledDeltaTime;
             timer.text = ((int) currentTime / 60).ToString("D2") + ":" + ((int) currentTime % 60).ToString("D2");
-
         } else {
             LoseLevel();
         }
@@ -41,7 +39,6 @@ public class GameManager : MonoBehaviour {
         // can player ride the vehicle or not?
         if (!canRide && player.gotSacks >= neededSacks) { // to make sure it called only once
             canRide = true;
-            player.GetComponentInChildren<Renderer>().material.color = Color.yellow; // TODO: remove
             vehicle.GetComponentInChildren<Collider>().enabled = true; // TODO: remove
             vehicle.GetComponentInChildren<Renderer>().material.color = Color.cyan; // TODO: remove
         }
@@ -59,30 +56,27 @@ public class GameManager : MonoBehaviour {
     }
 
     void LoseLevel() {
+        foreach (var barbarian in FindObjectsOfType<Barbarian>()) {
+            barbarian.Stop();
+        }
         if (!justLost) {
             counter = Time.time + 3f;
-            player.GetComponentInChildren<Renderer>().material.color = Color.blue;
             justLost = true;
         } else if (Time.time >= counter) {
             Time.timeScale = 0f;
             loseMenu.SetActive(true);
             justLost = false;
-
+            Time.timeScale = 0;
         }
-
     }
 
     void WinLevel() {
-
         if (!justWon) {
-            counter = Time.time + 3f;
             justWon = true;
+            counter = Time.time + 3f;
         } else if (Time.time >= counter) {
             winMenu.SetActive(true);
             Time.timeScale = 0f;
-
-            justWon = false;
         }
-
     }
 }
