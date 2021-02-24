@@ -8,10 +8,15 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
     public GameObject pauseButton;
+    public Sprite getto;
+        public Sprite nigeta;
+
     
     public static bool GamePaused = false;
     private GameObject MainObject;
     private Scene scene;
+        public int sackIndex = 0;
+
    // public Text timer;
 
 
@@ -63,5 +68,15 @@ public class PauseMenu : MonoBehaviour
     public void retry()
     {
         SceneManager.LoadScene(scene.name);
+    }
+     public void sackUIrefresh(bool isClaimed){
+        
+        if(isClaimed) 
+        this.transform.FindChild("SacksUI").transform.GetChild(sackIndex).GetComponent<Image>().sprite = getto;
+        else{
+        this.transform.FindChild("SacksUI").transform.GetChild(sackIndex).GetComponent<Image>().sprite = nigeta;
+        }
+                sackIndex ++;
+
     }
 }

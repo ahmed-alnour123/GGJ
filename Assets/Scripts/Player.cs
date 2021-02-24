@@ -25,6 +25,8 @@ public class Player : MonoBehaviour {
     private float newSpeed;
     private bool isGhost = false;
     private Collider playerCollider;
+    public PauseMenu pausemenu;
+
 
     private void Start() {
         source = GetComponent<AudioSource>();
@@ -35,6 +37,10 @@ public class Player : MonoBehaviour {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
         newSpeed = (h == 0) ? speed : speed * slowDownFactor;
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        transform.FindChild("Dust").gameObject.SetActive(true);
+        else transform.FindChild("Dust").gameObject.SetActive(false);
+
 
         if (health == 0) {
             isDead = true;
@@ -74,6 +80,8 @@ public class Player : MonoBehaviour {
                 Destroy(other.gameObject);
                 gotSacks++;
                 source.Play();
+                pausemenu.sackUIrefresh(true);
+
                 break;
         }
     }

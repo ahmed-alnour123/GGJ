@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
             barbarian.Stop();
         }
         if (!justLost) {
-            counter = Time.time + 3f;
+            counter = Time.time + 0.1f;
             justLost = true;
         } else if (Time.time >= counter) {
             Time.timeScale = 0f;
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
     void WinLevel() {
         if (!justWon) {
             justWon = true;
-            counter = Time.time + 3f;
+            counter = Time.time + 0.1f;
         } else if (Time.time >= counter) {
             winMenu.SetActive(true);
             Time.timeScale = 0f;
