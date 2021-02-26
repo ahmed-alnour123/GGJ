@@ -25,8 +25,20 @@ public class Player : MonoBehaviour {
     private float newSpeed;
     private bool isGhost = false;
     private Collider playerCollider;
-    public PauseMenu pausemenu;
+    public CanvasScript canvas;
 
+    // just play start
+    public static Player current;
+    public event System.Action onPlayerHit;
+    public void PlayerHit() {
+        if (onPlayerHit != null) {
+            onPlayerHit();
+        }
+    }
+    private void Awake() {
+        current = this;
+    }
+    // just play end
 
     private void Start() {
         source = GetComponent<AudioSource>();
@@ -35,12 +47,14 @@ public class Player : MonoBehaviour {
     }
     void Update() {
         h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        // v = Input.GetAxisRaw("Vertical");
+        v = 1;
         newSpeed = (h == 0) ? speed : speed * slowDownFactor;
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        transform.FindChild("Dust").gameObject.SetActive(true);
-        else transform.FindChild("Dust").gameObject.SetActive(false);
-
+        if (true || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
+            transform.Find("Dust").gameObject.SetActive(true);
+        } else {
+            transform.Find("Dust").gameObject.SetActive(false);
+        }
 
         if (health == 0) {
             isDead = true;
@@ -80,8 +94,7 @@ public class Player : MonoBehaviour {
                 Destroy(other.gameObject);
                 gotSacks++;
                 source.Play();
-                pausemenu.sackUIrefresh(true);
-
+                canvas.sackUIrefresh(true);
                 break;
         }
     }
@@ -96,6 +109,7 @@ public class Player : MonoBehaviour {
             case "Barbarian":
                 health--;
                 isGhost = true;
+                PlayerHit();
                 break;
         }
     }

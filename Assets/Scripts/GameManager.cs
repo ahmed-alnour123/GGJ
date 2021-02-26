@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
     void Update() {
         // level timer
         if (currentTime > 0) {
-            currentTime -= Time.unscaledDeltaTime;
+            currentTime -= Time.deltaTime;
             timer.text = ((int) currentTime / 60).ToString("D2") + ":" + ((int) currentTime % 60).ToString("D2");
         } else {
             LoseLevel();

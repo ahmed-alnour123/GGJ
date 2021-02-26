@@ -11,7 +11,7 @@ public class Sack : MonoBehaviour {
     private Rigidbody rb;
     private Vector3 target; // random position on planet
     private Transform player;
-    private PauseMenu pausemenu;
+    private CanvasScript canvas;
 
     public void Init() {
         SackManager parent = GetComponentInParent<SackManager>();
@@ -21,7 +21,7 @@ public class Sack : MonoBehaviour {
     }
 
     private void Start() {
-        pausemenu = GameObject.Find("Canvas").GetComponent<PauseMenu>();
+        canvas = GameObject.Find("Canvas").GetComponent<CanvasScript>();
         source = GetComponent<AudioSource>();
         Init();
         isAwake = false;
@@ -67,8 +67,7 @@ public class Sack : MonoBehaviour {
         if (currentTime < time) {
             currentTime += Time.deltaTime;
         } else {
-            pausemenu.sackUIrefresh(false);
-
+            canvas.sackUIrefresh(false);
             isDisappeard = true;
         }
     }
