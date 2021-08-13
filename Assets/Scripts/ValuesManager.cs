@@ -9,6 +9,6 @@ public class ValuesManager : MonoBehaviour {
 
     void Update() {
         radius = localRadius;
-        Debug.LogWarning($"radius is {radius}"); // warning so we can hide it in inspector
+       // Debug.LogWarning($"radius is {radius}"); // warning so we can hide it in inspector
     }
 }
