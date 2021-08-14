@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
 
     [HideInInspector]
     public bool isDead;
+    public bool isMovingright;
+    public bool isMovingleft;
     [HideInInspector]
     public bool onVehicle = false;
     [HideInInspector]
@@ -46,7 +48,8 @@ public class Player : MonoBehaviour {
         playerCollider = GetComponent<Collider>();
     }
     void Update() {
-        h = Input.GetAxisRaw("Horizontal");
+        if (isMovingright) { h = 1; } else if (isMovingleft) { h = -1; } else { h = 0; }
+
         // v = Input.GetAxisRaw("Vertical");
         v = 1;
         newSpeed = (h == 0) ? speed : speed * slowDownFactor;
@@ -124,3 +127,4 @@ public class Player : MonoBehaviour {
     }
 
 }
+
