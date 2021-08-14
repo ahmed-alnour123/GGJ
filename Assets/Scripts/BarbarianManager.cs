@@ -13,6 +13,7 @@ public class BarbarianManager : MonoBehaviour {
     public float height;
 
     void Start() {
+        numberOfBarbarians = DifficultyManager.numberOfEnemies;
         var player = GameObject.FindObjectOfType<Player>();
         for (int i = 0; i < numberOfBarbarians; i++) {
             var rb = Instantiate(barbarian,

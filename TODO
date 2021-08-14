@@ -1,0 +1,16 @@
+problems:
+    ☐ since Vector3.MoveTowards works in stright line, so when the target is in the
+        other side of planet it move slowly
+    ☐ there is problem in win and lose timer, because the functions aren't called per frame
+    ☐ when the player is near enemy, he gets hit immediatly
+
+primary:
+    ✔ complete sackManager and barbarianManager
+    ✔ make the game running and playable
+    ☐ change the sounds
+
+extra:
+    ☐ add an arrow to help player finding sacks
+    ✔ add minimap to help player avoid enemies
+    ☐ add indicator to enemies and sacks awakeRadius
+    ☐ improve particle system

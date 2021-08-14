@@ -73,4 +73,9 @@ public class CanvasScript : MonoBehaviour {
         livesUI.transform.GetChild(lives - 1).gameObject.SetActive(false);
         lives--;
     }
+
+    public void NextLevel() {
+        DifficultyManager.numberOfEnemies++;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

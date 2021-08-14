@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour {
             (sackManager.outOfSacks && sackManager.sacksNow + player.gotSacks < neededSacks)) {
             LoseLevel();
         }
+
+        // this is for debug only
+        if (Input.GetKeyDown(KeyCode.P)) {
+            WinLevel();
+        }
     }
 
     void LoseLevel() {
@@ -63,10 +68,7 @@ public class GameManager : MonoBehaviour {
             counter = Time.time + 0.1f;
             justLost = true;
         } else if (Time.time >= counter) {
-            Time.timeScale = 0f;
-            loseMenu.SetActive(true);
-            justLost = false;
-            Time.timeScale = 0;
+            StartCoroutine(LoseTheLevel());
         }
     }
 
@@ -78,5 +80,13 @@ public class GameManager : MonoBehaviour {
             winMenu.SetActive(true);
             Time.timeScale = 0f;
         }
+    }
+
+    IEnumerator LoseTheLevel() {
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0f;
+        loseMenu.SetActive(true);
+        justLost = false;
+        DifficultyManager.numberOfEnemies++;
     }
 }
