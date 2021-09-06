@@ -75,7 +75,7 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void NextLevel() {
-        DifficultyManager.numberOfEnemies++;
+        DifficultyManager.playCounter++;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
         // level timer
         if (currentTime > 0) {
             currentTime -= Time.deltaTime;
-            timer.text = ((int) currentTime / 60).ToString("D2") + ":" + ((int) currentTime % 60).ToString("D2");
+            timer.text = ((int)currentTime / 60).ToString("D2") + ":" + ((int)currentTime % 60).ToString("D2");
         } else {
             LoseLevel();
         }
@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour {
         if (!canRide && player.gotSacks >= neededSacks) { // to make sure it called only once
             canRide = true;
             vehicle.GetComponentInChildren<Collider>().enabled = true; // TODO: remove
-            vehicle.GetComponentInChildren<Renderer>().material.color = Color.cyan; // TODO: remove
+            // vehicle.GetComponentInChildren<Renderer>().material.color = Color.cyan; // TODO: remove
+            vehicle.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         //drive the vehcile
@@ -87,6 +88,5 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 0f;
         loseMenu.SetActive(true);
         justLost = false;
-        DifficultyManager.numberOfEnemies++;
     }
 }
